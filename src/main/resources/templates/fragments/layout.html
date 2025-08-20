@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/header :: common-head">
+    <title layout:title-pattern="$CONTENT_TITLE">Todo App</title>
+</head>
+<body>
+<header th:replace="fragments/header :: common-header"></header>
+
+<main>
+    <div layout:fragment="content"></div>
+</main>
+
+<footer th:replace="fragments/footer :: common-footer"></footer>
+</body>
+</html>
