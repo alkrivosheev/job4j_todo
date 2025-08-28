@@ -21,7 +21,7 @@ public class EditTaskController {
     @GetMapping("/tasks/{id}/edit")
     public String showEditForm(@PathVariable Integer id, Model model) {
         Task task = taskService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(String.format("Неверный ID задачи: %d" ,id)));
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Неверный ID задачи: %d", id)));
         model.addAttribute("task", task);
         return "edit-task";
     }
@@ -29,7 +29,7 @@ public class EditTaskController {
     @PostMapping("/tasks/{id}")
     public String updateTask(@PathVariable Integer id, @ModelAttribute Task task) {
         Task existingTask = taskService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(String.format("Неверный ID задачи: %d" ,id)));
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Неверный ID задачи: %d", id)));
         task.setCreated(existingTask.getCreated());
         task.setId(id);
 
