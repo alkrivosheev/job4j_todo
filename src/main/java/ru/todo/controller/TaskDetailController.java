@@ -39,6 +39,6 @@ public class TaskDetailController {
             task.setDone(!task.isDone());
             taskService.update(task);
         }
-        return "redirect:/tasks/" + id;
+        return String.format("redirect:/tasks/%d", id);
     }
 }
