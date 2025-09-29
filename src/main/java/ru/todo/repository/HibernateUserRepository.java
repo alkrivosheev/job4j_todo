@@ -33,7 +33,7 @@ public class HibernateUserRepository implements UserRepository, AutoCloseable {
                     throw new IllegalArgumentException("Пользователь с логином '" + user.getLogin() + "' уже существует");
                 }
 
-                session.save(user);
+                session.persist(user);
                 session.getTransaction().commit();
                 return user;
             } catch (Exception e) {

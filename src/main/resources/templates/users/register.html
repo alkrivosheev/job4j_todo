@@ -1,53 +1,56 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
 <head>
     <title>Регистрация - Todo App</title>
-    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<div class="container">
-    <div class="auth-form">
-        <h2>Регистрация нового пользователя</h2>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="auth-form">
+            <h2>Регистрация нового пользователя</h2>
 
-        <div th:if="${errorMessage}" class="alert alert-error">
-            <span th:text="${errorMessage}"></span>
+            <div th:if="${errorMessage}" class="alert alert-error">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <div th:if="${successMessage}" class="alert alert-success">
+                <span th:text="${successMessage}"></span>
+            </div>
+
+            <form th:action="@{/users/register}" method="post" th:object="${user}">
+                <div class="form-group">
+                    <label for="login">Логин *</label>
+                    <input type="text" id="login" th:field="*{login}"
+                           class="form-control" required>
+                    <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"
+                          class="error-text"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Пароль *</label>
+                    <input type="password" id="password" th:field="*{password}"
+                           class="form-control" required>
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                          class="error-text"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Имя *</label>
+                    <input type="text" id="name" th:field="*{name}"
+                           class="form-control" required>
+                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                          class="error-text"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+
+                <div class="auth-links">
+                    <p>Уже есть аккаунт? <a th:href="@{/users/login}">Войти</a></p>
+                </div>
+            </form>
         </div>
-
-        <div th:if="${successMessage}" class="alert alert-success">
-            <span th:text="${successMessage}"></span>
-        </div>
-
-        <form th:action="@{/users/register}" th:object="${user}" method="post">
-            <div class="form-group">
-                <label for="login">Логин *</label>
-                <input type="text" id="login" th:field="*{login}"
-                       class="form-control" required>
-                <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"
-                      class="error-text"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Пароль *</label>
-                <input type="password" id="password" th:field="*{password}"
-                       class="form-control" required>
-                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                      class="error-text"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="UserName">Имя *</label>
-                <input type="text" id="UserName" th:field="*{userName}"
-                       class="form-control" required>
-                <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
-                      class="error-text"></span>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-
-            <div class="auth-links">
-                <p>Уже есть аккаунт? <a th:href="@{/users/login}">Войти</a></p>
-            </div>
-        </form>
     </div>
 </div>
 </body>

@@ -25,7 +25,7 @@ public class HibernateTaskRepository implements TaskRepository, AutoCloseable {
         try (Session session = sf.openSession()) {
             session.beginTransaction();
             try {
-                session.save(task);
+                session.persist(task);
                 session.getTransaction().commit();
                 return task;
             } catch (Exception e) {

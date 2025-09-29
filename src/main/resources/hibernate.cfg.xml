@@ -13,5 +13,6 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <mapping class="ru.todo.model.Task"/>
+        <mapping class="ru.todo.model.User"/>
     </session-factory>
 </hibernate-configuration>

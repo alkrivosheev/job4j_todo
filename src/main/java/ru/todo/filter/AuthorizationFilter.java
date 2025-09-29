@@ -24,7 +24,8 @@ public class AuthorizationFilter extends HttpFilter {
             "/edit-task",
             "/index",
             "/new-task",
-            "task-detail"
+            "/task-detail",
+            "/"
     );
 
     @Override
@@ -33,7 +34,6 @@ public class AuthorizationFilter extends HttpFilter {
 
         var uri = request.getRequestURI();
         var contextPath = request.getContextPath();
-
         var path = uri.substring(contextPath.length());
 
         if (isPublicUrl(path)) {
@@ -57,8 +57,7 @@ public class AuthorizationFilter extends HttpFilter {
     }
 
     private boolean isProtectedUrl(String path) {
-        return PROTECTED_URL_PATTERNS.stream().anyMatch(path::startsWith)
-                || !isPublicUrl(path);
+        return PROTECTED_URL_PATTERNS.stream().anyMatch(path::startsWith);
     }
 
     private void handleUnauthorizedAccess(HttpServletRequest request, HttpServletResponse response, String requestedPath)
