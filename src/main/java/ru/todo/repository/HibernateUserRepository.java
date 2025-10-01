@@ -21,7 +21,7 @@ import java.util.Optional;
 @Repository
 public class HibernateUserRepository implements UserRepository, AutoCloseable {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure().build();
@@ -41,7 +41,7 @@ public class HibernateUserRepository implements UserRepository, AutoCloseable {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            logger.error("Ошибка при сохранении пользователя с логином: {}", user.getLogin(), e);
+            LOGGER.error("Ошибка при сохранении пользователя с логином: {}", user.getLogin(), e);
             return Optional.empty();
         } finally {
             session.close();
