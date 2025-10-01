@@ -1,9 +1,11 @@
 package ru.todo.repository;
 
 
+import jakarta.persistence.PersistenceException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -21,12 +23,21 @@ public class HibernateUserRepository implements UserRepository, AutoCloseable {
             .buildMetadata().buildSessionFactory();
 
     @Override
-    public User save(User user) {
-        try (Session session = sf.openSession()) {
-            session.beginTransaction();
+    public Optional<User> save(User user) {
+        Session session = sf.openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
             session.persist(user);
-            session.getTransaction().commit();
-            return user;
+            transaction.commit();
+            return Optional.of(user);
+        } catch (PersistenceException e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            return Optional.empty();
+        } finally {
+            session.close();
         }
     }
 
