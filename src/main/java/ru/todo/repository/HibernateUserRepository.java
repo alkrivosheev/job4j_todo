@@ -24,23 +24,9 @@ public class HibernateUserRepository implements UserRepository, AutoCloseable {
     public User save(User user) {
         try (Session session = sf.openSession()) {
             session.beginTransaction();
-            try {
-                User existingUser = session.createQuery("FROM User WHERE login = :fLogin", User.class)
-                        .setParameter("fLogin", user.getLogin())
-                        .uniqueResult();
-
-                if (existingUser != null) {
-                    throw new IllegalArgumentException("Пользователь с логином '" + user.getLogin() + "' уже существует");
-                }
-
-                session.persist(user);
-                session.getTransaction().commit();
-                return user;
-            } catch (Exception e) {
-                session.getTransaction().rollback();
-                log.error("Failed to save user. Error: {}", e.getMessage(), e);
-                throw e;
-            }
+            session.persist(user);
+            session.getTransaction().commit();
+            return user;
         }
     }
 
