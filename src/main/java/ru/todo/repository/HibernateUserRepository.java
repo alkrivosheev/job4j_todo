@@ -3,6 +3,8 @@ package ru.todo.repository;
 
 import jakarta.persistence.PersistenceException;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -11,11 +13,15 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.springframework.stereotype.Repository;
 import ru.todo.model.User;
+import ru.todo.service.UserService;
+
 import java.util.Optional;
 
 @Slf4j
 @Repository
 public class HibernateUserRepository implements UserRepository, AutoCloseable {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure().build();
@@ -35,6 +41,7 @@ public class HibernateUserRepository implements UserRepository, AutoCloseable {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
+            logger.error("Ошибка при сохранении пользователя с логином: {}", user.getLogin(), e);
             return Optional.empty();
         } finally {
             session.close();
