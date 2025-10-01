@@ -74,6 +74,17 @@ public class CrudRepository {
         return tx(command);
     }
 
+    public int executeUpdate(String query, Map<String, Object> args) {
+        Function<Session, Integer> command = session -> {
+            var sq = session.createQuery(query);
+            for (Map.Entry<String, Object> arg : args.entrySet()) {
+                sq.setParameter(arg.getKey(), arg.getValue());
+            }
+            return sq.executeUpdate();
+        };
+        return tx(command);
+    }
+
     public <T> T tx(Function<Session, T> command) {
         Session session = sf.openSession();
         Transaction transaction = null;

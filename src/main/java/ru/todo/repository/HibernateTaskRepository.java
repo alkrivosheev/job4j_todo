@@ -55,16 +55,11 @@ public class HibernateTaskRepository implements TaskRepository {
 
     @Override
     public boolean deleteById(int id) {
-        Optional<Task> task = findById(id);
-        if (task.isEmpty()) {
-            return false;
-        }
         try {
-            crudRepository.run(
+            int rowsAffected = crudRepository.executeUpdate(
                     "DELETE FROM Task WHERE id = :fId",
-                    Map.of("fId", id)
-            );
-            return true;
+                    Map.of("fId", id));
+            return rowsAffected > 0;
         } catch (Exception e) {
             log.error("Ошибка удаления задачи с id: {}", id, e);
             return false;
@@ -73,12 +68,14 @@ public class HibernateTaskRepository implements TaskRepository {
 
     @Override
     public boolean markAsDone(int id) {
-        if (findById(id).isEmpty()) {
-            return false;
-        }
-        crudRepository.run(
+        try {
+            int rowsAffected = crudRepository.executeUpdate(
                 "UPDATE Task SET done = true WHERE id = :fId",
                 Map.of("fId", id));
-        return true;
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            log.error("Ошибка при обновлении статуса задачи с id: {}", id, e);
+            return false;
+        }
     }
 }
