@@ -22,4 +22,8 @@ public class Task {
 
     @Column(name = "done", nullable = false)
     private boolean done = false;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

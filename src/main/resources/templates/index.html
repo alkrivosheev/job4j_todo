@@ -40,6 +40,7 @@
                 <th>Описание</th>
                 <th>Дата создания</th>
                 <th>Статус</th>
+                <th>Пользователь</th>
             </tr>
             </thead>
             <tbody>
@@ -60,6 +61,7 @@
                     <span th:if="${task.done}" class="badge bg-success">Выполнено</span>
                     <span th:unless="${task.done}" class="badge bg-warning text-dark">В процессе</span>
                 </td>
+                <td th:text="${task.getUser().getName()}"></td>
             </tr>
             </tbody>
         </table>
