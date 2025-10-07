@@ -3,5 +3,6 @@ CREATE TABLE if not exists tasks (
                        description TEXT,
                        created TIMESTAMP,
                        done BOOLEAN,
-                       user_id INT NOT NULL REFERENCES users(id)
+                       user_id INT NOT NULL REFERENCES users(id),
+                       priority_id INT REFERENCES priorities(id)
 );

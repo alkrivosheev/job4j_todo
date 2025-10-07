@@ -31,13 +31,13 @@ public class HibernateTaskRepository implements TaskRepository {
 
     @Override
     public List<Task> findAll() {
-        return crudRepository.query("FROM Task ORDER BY id DESC", Task.class);
+        return crudRepository.query("FROM Task t JOIN FETCH t.priority ORDER BY t.id DESC", Task.class);
     }
 
     @Override
     public List<Task> findByDone(boolean done) {
         return crudRepository.query(
-                "FROM Task WHERE done = :fDone ORDER BY created DESC", Task.class,
+                "FROM Task t JOIN FETCH t.priority WHERE done = :fDone ORDER BY created DESC", Task.class,
                 Map.of("fDone", done)
         );
     }

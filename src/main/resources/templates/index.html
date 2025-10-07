@@ -41,6 +41,7 @@
                 <th>Дата создания</th>
                 <th>Статус</th>
                 <th>Пользователь</th>
+                <th>Приоритет</th>
             </tr>
             </thead>
             <tbody>
@@ -62,6 +63,7 @@
                     <span th:unless="${task.done}" class="badge bg-warning text-dark">В процессе</span>
                 </td>
                 <td th:text="${task.getUser().getName()}"></td>
+                <td th:text="${task.getPriority().getName()}"></td>
             </tr>
             </tbody>
         </table>
