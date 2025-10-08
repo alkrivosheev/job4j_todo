@@ -63,7 +63,7 @@
                     <span th:unless="${task.done}" class="badge bg-warning text-dark">В процессе</span>
                 </td>
                 <td th:text="${task.getUser().getName()}"></td>
-                <td th:text="${task.getPriority().getName()}"></td>
+                <td th:text="${task.priority?.name}"></td>
             </tr>
             </tbody>
         </table>

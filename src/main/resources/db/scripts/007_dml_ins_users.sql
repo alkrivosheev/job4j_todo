@@ -1,0 +1,1 @@
+INSERT INTO users (login, password, name) VALUES ('test@mail.ru', 123, 'Alexander');

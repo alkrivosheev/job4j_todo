@@ -24,6 +24,17 @@
                     <input th:field="*{done}" type="checkbox" class="form-check-input" id="done">
                     <label class="form-check-label" for="done">Задача выполнена</label>
                 </div>
+                <div class="mb-3">
+                    <label for="category"><b>Категория</b></label>
+                    <div id="category">
+                        <div th:each="category : ${categories}">
+                            <label>
+                                <input type="checkbox" name="categoryIds" th:value="${category.id}">
+                                <span th:text="${category.name}"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a href="/" class="btn btn-secondary me-md-2">Отмена</a>
