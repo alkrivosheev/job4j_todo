@@ -44,6 +44,11 @@
                           class="error-text"></span>
                 </div>
 
+                <select name="timezone" id="timezone">
+                    <option value="">Выберите Ваш часовой пояс</option>
+                    <option th:each="tz : ${timezones}" th:value="${tz}" th:text="${tz}">Timezone</option>
+                </select>
+
                 <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
 
                 <div class="auth-links">

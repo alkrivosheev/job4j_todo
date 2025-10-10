@@ -1,1 +1,1 @@
-INSERT INTO users (login, password, name) VALUES ('test@mail.ru', 123, 'Alexander');
+INSERT INTO users (login, password, name, timezone) VALUES ('test@mail.ru', 123, 'Alexander', 'UTC+3');

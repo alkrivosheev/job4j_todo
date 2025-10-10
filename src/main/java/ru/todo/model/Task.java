@@ -3,6 +3,7 @@ package ru.todo.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class Task {
     private String description;
 
     @Column(name = "created", nullable = false)
-    private LocalDateTime created = LocalDateTime.now();
+    private Instant created = Instant.now();
 
     @Column(name = "done", nullable = false)
     private boolean done = false;

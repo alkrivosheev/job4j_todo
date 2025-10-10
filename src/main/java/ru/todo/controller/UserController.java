@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.todo.model.User;
 import ru.todo.service.UserService;
+import java.util.Arrays;
+import java.util.List;
+import java.util.TimeZone;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -25,6 +28,8 @@ public class UserController {
     @GetMapping("/register")
     public String getRegistrationPage(Model model) {
         model.addAttribute("user", new User());
+        List<String> timezones = Arrays.asList(TimeZone.getAvailableIDs());
+        model.addAttribute("timezones", timezones);
         return "users/register";
     }
 

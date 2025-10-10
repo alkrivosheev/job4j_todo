@@ -1,14 +1,10 @@
 package ru.todo.repository;
 
-import lombok.AllArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -16,12 +12,10 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 @Repository
-@AllArgsConstructor
 public class CrudRepository {
-    private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-            .configure().build();
-    private final SessionFactory sf = new MetadataSources(registry)
-            .buildMetadata().buildSessionFactory();
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     public void run(Consumer<Session> command) {
         tx(session -> {
@@ -86,7 +80,7 @@ public class CrudRepository {
     }
 
     public <T> T tx(Function<Session, T> command) {
-        Session session = sf.openSession();
+        Session session = sessionFactory.openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
