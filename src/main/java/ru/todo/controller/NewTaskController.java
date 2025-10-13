@@ -12,7 +12,6 @@ import ru.todo.model.Task;
 import ru.todo.model.User;
 import ru.todo.service.CategoryService;
 import ru.todo.service.TaskService;
-import ru.todo.service.UserService;
 
 import java.util.List;
 import java.util.Set;
@@ -21,12 +20,10 @@ import java.util.Set;
 public class NewTaskController {
 
     private final TaskService taskService;
-    private final UserService userService;
     private final CategoryService categoryService;
 
-    public NewTaskController(TaskService taskService, UserService userService, CategoryService categoryService) {
+    public NewTaskController(TaskService taskService, CategoryService categoryService) {
         this.taskService = taskService;
-        this.userService = userService;
         this.categoryService = categoryService;
     }
 

@@ -27,7 +27,6 @@ public class IndexController {
         User currentUser = (User) session.getAttribute("user");
         List<Task> tasks;
 
-        // Лог: проверяем, что пользователь есть
         if (currentUser == null) {
             log.warn("Пользователь не найден в сессии");
             return "redirect:/login";
@@ -49,9 +48,6 @@ public class IndexController {
                 filter = "all";
                 log.info("Загружены все задачи: {}", tasks.size());
         }
-//        List<TaskDto> taskDtos = tasks.stream()
-//                .map(task -> new TaskDto(task, currentUser.getTimezone()))
-//                .collect(Collectors.toList());
         List<TaskDto> taskDtos = tasks.stream()
                 .map(task -> {
                     log.debug("Конвертируем задачу {} с датой {}", task.getId(), task.getCreated());

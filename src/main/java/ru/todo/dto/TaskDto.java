@@ -36,16 +36,12 @@ public class TaskDto {
         this.categories = task.getCategories();
 
         if (task.getCreated() != null) {
-            // Логируем оригинальное время
             log.debug("Оригинальное время задачи {}: {}", task.getId(), task.getCreated());
-
-            // Предполагаем, что время в БД хранится в UTC
             ZonedDateTime utcTime = task.getCreated().atZone(ZoneId.of("UTC"));
             ZonedDateTime userTime = utcTime.withZoneSameInstant(ZoneId.of(userTimezone));
 
             this.createdFormatted = userTime.format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy"));
 
-            // Логируем результат
             log.debug("Конвертированное время задачи {}: {} -> {}", task.getId(), task.getCreated(), this.createdFormatted);
         } else {
             this.createdFormatted = "N/A";
